@@ -1,19 +1,71 @@
 import { Link, NavLink } from "react-router-dom";
+import type { CSSProperties } from "react";
 
-const linkStyle: React.CSSProperties = { marginRight: 16, textDecoration: "none" };
-const active: React.CSSProperties = { fontWeight: 700 };
+const LOGO =
+  "https://davinciboardgame.com/wp-content/uploads/2023/01/Hy8uge6SCowHNV4QUwQ1_abBLok08iS03jz2W.png";
+
+const headerInner: CSSProperties = {
+  padding: "12px 16px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  width: "100%",
+};
+
+const brandStyle: CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  gap: 10,
+  textDecoration: "none",
+};
+
+const logoStyle: CSSProperties = {
+  height: 36,
+  width: "auto",
+  display: "block",
+};
+
+const brandTitle: CSSProperties = {
+  color: "#111827",
+  fontWeight: 800,
+  fontSize: 18,
+  lineHeight: 1.1,
+  whiteSpace: "nowrap",
+};
+
+const linkStyle: CSSProperties = { marginRight: 16, textDecoration: "none" };
+const active: CSSProperties = { fontWeight: 700 };
 
 export default function NavBar() {
   return (
     <header style={{ background: "#fff", borderBottom: "1px solid #e5e7eb" }}>
-      <div style={{ padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <Link to="/" style={{ fontWeight: 800, fontSize: 18, color: "#111827", textDecoration: "none" }}>
-          JSONPlaceholder Admin
+      <div style={headerInner}>
+        {/* SOL: LOGO + BAŞLIK */}
+        <Link to="/" style={brandStyle} aria-label="Home">
+          <img src={LOGO} alt="Davinci Logo" style={logoStyle} />
+          <span style={brandTitle}>Davinci Board Game Cafe Admin Panel</span>
         </Link>
+
+        {/* SAĞ: MENÜ */}
         <nav>
-          <NavLink to="/" style={({ isActive }) => ({ ...linkStyle, ...(isActive ? active : {}) })}>Home</NavLink>
-          <NavLink to="/users" style={({ isActive }) => ({ ...linkStyle, ...(isActive ? active : {}) })}>Users</NavLink>
-          <NavLink to="/posts" style={({ isActive }) => ({ ...linkStyle, ...(isActive ? active : {}) })}>Posts</NavLink>
+          <NavLink
+            to="/"
+            style={({ isActive }) => ({ ...linkStyle, ...(isActive ? active : {}) })}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/users"
+            style={({ isActive }) => ({ ...linkStyle, ...(isActive ? active : {}) })}
+          >
+            Users
+          </NavLink>
+          <NavLink
+            to="/posts"
+            style={({ isActive }) => ({ ...linkStyle, ...(isActive ? active : {}) })}
+          >
+            Posts
+          </NavLink>
         </nav>
       </div>
     </header>
