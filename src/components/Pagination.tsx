@@ -2,7 +2,7 @@ import React from "react";
 
 type Props = {
   total: number;
-  page: number;         // 1-based
+  page: number;     
   pageSize: number;
   onPageChange: (p: number) => void;
   onPageSizeChange?: (s: number) => void;
