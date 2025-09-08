@@ -1,7 +1,9 @@
+// src/pages/users/UsersPage.tsx
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { User } from "../../types";
 import { getUsers, createUser, updateUser, deleteUser } from "../../api/users";
+import Pagination from "../../components/Pagination";
 import styles from "./UsersPage.module.css";
 
 /** UI-only field (not from API) */
@@ -24,11 +26,17 @@ export default function UsersPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const [q, setQ] = useState(""); // search
+  // search
+  const [q, setQ] = useState("");
 
+  // form
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [form, setForm] = useState<Draft>(defaultDraft);
+
+  // pagination
+  const [page, setPage] = useState(1);        // 1-based
+  const [pageSize, setPageSize] = useState(5); // 5 or 10
 
   useEffect(() => {
     (async () => {
@@ -36,8 +44,7 @@ export default function UsersPage() {
         const raw = await getUsers();
         const withUi: UiUser[] = raw.map((u) => ({
           ...u,
-          // deterministic sample role (UI only)
-          role: u.id % 3 === 0 ? "Admin" : "User",
+          role: u.id % 3 === 0 ? "Admin" : "User", // demo role
         }));
         setUsers(withUi);
       } catch {
@@ -48,16 +55,29 @@ export default function UsersPage() {
     })();
   }, []);
 
+  // filtering
   const filtered = useMemo(() => {
     const term = q.trim().toLowerCase();
-    return users.filter((u) =>
-      term.length === 0 ||
-      u.id.toString().includes(term) ||
-      u.name.toLowerCase().includes(term) ||
-      u.username.toLowerCase().includes(term) ||
-      u.email.toLowerCase().includes(term)
+    return users.filter(
+      (u) =>
+        term.length === 0 ||
+        u.id.toString().includes(term) ||
+        u.name.toLowerCase().includes(term) ||
+        u.username.toLowerCase().includes(term) ||
+        u.email.toLowerCase().includes(term)
     );
   }, [users, q]);
+
+  // reset to first page on filter change
+  useEffect(() => {
+    setPage(1);
+  }, [filtered]);
+
+  // page slice
+  const total = filtered.length;
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize;
+  const visible = filtered.slice(start, end);
 
   const startCreate = () => {
     setShowForm(true);
@@ -105,7 +125,24 @@ export default function UsersPage() {
     if (!confirm("Are you sure you want to delete this user?")) return;
     try {
       await deleteUser(id);
-      setUsers((prev) => prev.filter((u) => u.id !== id));
+      setUsers((prev) => {
+        const next = prev.filter((u) => u.id !== id);
+
+        // adjust page if we deleted the last item on the last page
+        const term = q.trim().toLowerCase();
+        const nextFiltered = next.filter(
+          (u) =>
+            term.length === 0 ||
+            u.id.toString().includes(term) ||
+            u.name.toLowerCase().includes(term) ||
+            u.username.toLowerCase().includes(term) ||
+            u.email.toLowerCase().includes(term)
+        );
+        const newTotalPages = Math.max(1, Math.ceil(nextFiltered.length / pageSize));
+        if (page > newTotalPages) setPage(newTotalPages);
+
+        return next;
+      });
     } catch {
       alert("An error occurred while deleting.");
     }
@@ -134,7 +171,6 @@ export default function UsersPage() {
 
       {/* Card */}
       <div className={styles.card}>
-        {/* Title */}
         <div className={styles.headerRow}>
           <h1 style={{ margin: 0 }}>User List</h1>
         </div>
@@ -231,7 +267,7 @@ export default function UsersPage() {
               </tr>
             </thead>
             <tbody>
-              {filtered.map((u) => (
+              {visible.map((u) => (
                 <tr key={u.id}>
                   <td>{u.id}</td>
                   <td style={{ fontWeight: 600 }}>{u.username}</td>
@@ -254,7 +290,7 @@ export default function UsersPage() {
                   </td>
                 </tr>
               ))}
-              {filtered.length === 0 && (
+              {visible.length === 0 && (
                 <tr>
                   <td colSpan={6} style={{ textAlign: "center", padding: 16 }}>
                     No records.
@@ -263,6 +299,24 @@ export default function UsersPage() {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Pagination */}
+        <div style={{ marginTop: 12 }}>
+          <Pagination
+            total={total}
+            page={page}
+            pageSize={pageSize}
+            onPageChange={(p) => {
+              setPage(p);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            onPageSizeChange={(s) => {
+              setPageSize(s);
+              setPage(1);
+            }}
+            pageSizeOptions={[5, 10]}
+          />
         </div>
       </div>
     </section>
