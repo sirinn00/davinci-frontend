@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import type { User } from "../../types";
 import { getUsers, createUser, updateUser, deleteUser } from "../../api/users";
 
-/** UI’ya özel alan (JSONPlaceholder’dan gelmiyor, local state’te tutulur) */
 type Role = "Admin" | "Kullanıcı";
 
 type UiUser = User & { role: Role };
@@ -36,7 +35,6 @@ export default function UsersPage() {
         const raw = await getUsers();
         const withUi: UiUser[] = raw.map((u) => ({
           ...u,
-          // deterministik atama (id’ye göre) – sadece UI için
           role: u.id % 3 === 0 ? "Admin" : "Kullanıcı",
         }));
         setUsers(withUi);
@@ -53,7 +51,7 @@ export default function UsersPage() {
     return users.filter((u) => {
       const passQ =
         term.length === 0 ||
-        u.id.toString().includes(term) ||               // ← ID de aranır
+        u.id.toString().includes(term) ||              
         u.name.toLowerCase().includes(term) ||
         u.username.toLowerCase().includes(term) ||
         u.email.toLowerCase().includes(term);
@@ -119,7 +117,6 @@ export default function UsersPage() {
 
   return (
     <section>
-      {/* Üst bant */}
       <div style={topBar}>
         <div style={{ opacity: 0.9, fontWeight: 500 }}>Sistemdeki kullanıcıları yönetin</div>
         <div style={{ display: "flex", gap: 8 }}>
@@ -132,7 +129,6 @@ export default function UsersPage() {
         </div>
       </div>
 
-      {/* Başlık + Arama & Filtreler */}
       <div style={card}>
         <div
           style={{
@@ -234,7 +230,7 @@ export default function UsersPage() {
           <table style={table}>
             <thead>
               <tr>
-                <th>ID</th>                    {/* ← ID sütunu eklendi */}
+                <th>ID</th>                  
                 <th>Kullanıcı Adı</th>
                 <th>Ad Soyad</th>
                 <th>E-posta</th>
@@ -279,7 +275,6 @@ export default function UsersPage() {
   );
 }
 
-/* ---- Küçük UI yardımcıları ---- */
 function Badge({
   color,
   children,
@@ -309,10 +304,10 @@ const roleColor = (r: Role) =>
     ? { bg: "#f3e8ff", text: "#6b21a8", ring: "#e9d5ff" }
     : { bg: "#e0f2fe", text: "#075985", ring: "#bae6fd" };
 
-/* ---- Stiller ---- */
+
 const topBar: CSSProperties = {
   background: "#f5f3ff",
-  border: "1px solid #e9e5ff",   // ← tırnak düzeltildi
+  border: "1px solid #e9e5ff",  
   padding: "12px 16px",
   borderRadius: 12,
   marginBottom: 16,
