@@ -1,14 +1,18 @@
+/*Global Stiller*/
+
+/* Tüm elemanlarda kutu modeli: padding/border genişliğe dahil olsun */
 * { box-sizing: border-box; }
 
 html, body, #root { height: 100%; }
 
 body {
-  margin: 0;
-  background: #f6f7f9;
+  margin: 0; /* Tarayıcı default boşluklarını sıfırla */
+  background: #f6f7f9; 
   color: #111827;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
+/* React kök kapsayıcı: en az ekran yüksekliği kadar uzasın, tam genişlik kaplasın */
 #root {
   min-height: 100%;
   width: 100%;
