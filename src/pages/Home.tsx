@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import type { Post, User } from "../types";
+import type { Post} from "../types";
 import { getUsers } from "../api/users";
 import { getPosts } from "../api/posts";
 import styles from "./Home.module.css";
