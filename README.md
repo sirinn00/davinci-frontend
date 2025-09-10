@@ -24,7 +24,7 @@ npm run build
 npm run lint
 
 
-Kullanılan endpoint’ler:
+# kullanılan endpoint’ler:
 
 GET /users
 
@@ -35,9 +35,9 @@ POST /posts, PUT /posts/:id, DELETE /posts/:id
 
 
 📝 Komutlar
-npm install       # bağımlılıkları kur
-npm run dev       # geliştirme sunucusu
-npm run build     # production build
-npm run preview   # build'i yerelde test et
-npm run lint      # eslint kontrolü
+npm install       # bağımlılıkları kur  
+npm run dev       # geliştirme sunucusu  
+npm run build     # production build  
+npm run preview   # build'i yerelde test et  
+npm run lint      # eslint kontrolü  
 
