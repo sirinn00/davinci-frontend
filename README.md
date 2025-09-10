@@ -34,7 +34,7 @@ POST /posts, PUT /posts/:id, DELETE /posts/:id
 (Demo API olduğu için veritabanı yok; create/update yanıtları mock niteliğindedir.)
 
 
-📝 # komutlar    
+# komutlar(özet)    
 npm install       # bağımlılıkları kur  
 npm run dev       # geliştirme sunucusu  
 npm run build     # production build  
