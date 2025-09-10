@@ -1,9 +1,9 @@
-Davinci Admin Panel (Frontend Developer Web Assignment)
+# Davinci Admin Panel (Frontend Developer Web Assignment)
 
 React + Vite + TypeScript ile geliştirilmiş basit bir Admin Paneli.
 Kullanıcılar (Users) ve gönderiler (Posts) üzerinde CRUD arayüzü sağlar. Veriler demo amaçlı JSONPlaceholder API’sinden okunur.
 
-🚀 Hızlı Başlangıç
+# 🚀 Hızlı Başlangıç
 
 # depoları indir
 git clone <repo-url>
