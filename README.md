@@ -20,7 +20,6 @@ npm run dev
 # production build
 npm run build
 
-Kod Kalitesi
 # lint kontrolü (ESLint)
 npm run lint
 
