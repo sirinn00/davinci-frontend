@@ -1,69 +1,58 @@
-# React + TypeScript + Vite
+Davinci Admin Panel (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite + TypeScript ile geliştirilmiş basit bir Admin Paneli.
+Kullanıcılar (Users) ve gönderiler (Posts) üzerinde CRUD arayüzü sağlar. Veriler demo amaçlı JSONPlaceholder API’sinden okunur.
 
-Currently, two official plugins are available:
+🚀 Hızlı Başlangıç
+Gereksinimler
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Node.js: 18.x veya 20.x (LTS önerilir)
 
-## Expanding the ESLint configuration
+npm (veya tercih edersen pnpm / yarn)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Kurulum
+# depoları indir
+git clone <repo-url>
+cd <proje-klasörü>
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# paketleri kur
+npm install
+# pnpm kullanıyorsanız: pnpm install
+# yarn kullanıyorsanız: yarn
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Geliştirme Sunucusu
+npm run dev
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Üretim Derlemesi
+# production build
+npm run build
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Kod Kalitesi
+# lint kontrolü (ESLint)
+npm run lint
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Kullanılan endpoint’ler:
+
+GET /users
+
+GET /posts
+
+POST /posts, PUT /posts/:id, DELETE /posts/:id
+(Demo API olduğu için veritabanı yok; create/update yanıtları mock niteliğindedir.)
+
+🧪 Sık Karşılaşılan Sorunlar
+
+Port dolu: npm run dev başka bir port önerirse onu kullanın veya --port verin.
+
+Node sürümü: Hata alırsanız Node’u LTS sürüme güncelleyin.
+
+CORS / API: JSONPlaceholder genelde sorun çıkarmaz; ağ hatalarında devtools’u kontrol edin.
+
+📝 Komutlar (özet)
+npm install       # bağımlılıkları kur
+npm run dev       # geliştirme sunucusu
+npm run build     # production build
+npm run preview   # build'i yerelde test et
+npm run lint      # eslint kontrolü
+
